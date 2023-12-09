@@ -39,6 +39,7 @@
         nixLib = nixpkgs.lib;
 
         runtimeDeps = with pkgs; [
+          # -- Xorg --
           # Yells not found
           xorg.libX11
           xorg.libXcursor
@@ -46,7 +47,11 @@
 
           # Else "XKBNotFound" error
           libxkbcommon
-        ] ++ sharedDeps;
+
+          # -- Wayland --
+          # Winit errors out with WaylandError(Connection(NoWaylandLib))
+          wayland
+        ];
       in
       {
         devShells.rust = pkgs.mkShell {
